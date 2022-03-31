@@ -1,16 +1,13 @@
-const profileDataArgs = process.argv.slice(2, process.argv.length);
-console.log(profileDataArgs);
+const fs = require('fs');
+const generatePage = require('./src/page-template');
 
-const printProfileData = (profileDataArr) => {
-    // This...
-    for (let i = 0; i < profileDataArr.length; i++) {
-        console.log(profileDataArr[i]);
-    }
+const profileDataArgs = process.argv.slice(2);
 
-    console.log('==========');
+const [name, github] = profileDataArgs;
 
-    // is the same as this...
-    profileDataArr.forEach((profileItem) => console.log(profileItem));
-};
+//  SYNTAX: fx.writeFile('arg1'-name of the file, 'arg2'-function that generates file content, 'arg3'-callback function for error handling)  
+fs.writeFile('index.html', generatePage(name, github), err => {
+    if (err) throw err;
 
-printProfileData(profileDataArgs);
+    console.log('Portfolio complete! Check out index.html to see the output!');
+})
